@@ -5050,6 +5050,7 @@ MonoBehaviour:
   _symbol: {fileID: 5034033088323298500}
   _data: {fileID: 558303438805449277}
   _particleSystem: {fileID: 4652329430646642623}
+  _animator: {fileID: 565965841816989902}
 --- !u!114 &2237396757028074453
 MonoBehaviour:
   m_ObjectHideFlags: 0

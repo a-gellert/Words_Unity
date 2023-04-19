@@ -18,14 +18,17 @@ public class LetterManager : MonoBehaviour
     private Transform _data;
     [SerializeField]
     private ParticleSystem _particleSystem;
+    [SerializeField]
+    private Animator _animator;
 
     private Color _currentColor;
 
     public void SetValues()
     {
+
         _symbol.SymbolValue = (char)Random.Range(65, 91);
         _symbolTXT.text = _symbol.SymbolValue.ToString();
-
+        _animator.SetBool("IsPick", false);
         _symbol.Modifier = GetModifier(_symbol.SymbolValue);
         _currentColor = _image.color;
         _modifierTXT.text = _symbol.Modifier.ToString();
@@ -49,13 +52,15 @@ public class LetterManager : MonoBehaviour
             _symbol.IsChoosen = false;
             _image.color = _currentColor;
             RecountIndexes();
+            _animator.SetBool("IsPick", false);
+
             return false;
         }
         _image.color = Palette.CellRed;
         _symbol.IdInWord = index;
         _symbol.IsChoosen = true;
         Letters.Symbols.Add(_symbol);
-
+        _animator.SetBool("IsPick", true);
         return true;
     }
 
@@ -108,10 +113,12 @@ public class LetterManager : MonoBehaviour
 
     public void RefreshLetter()
     {
+
         SetValues();
     }
     public void SymbolRemoved(bool state)
     {
+
         _symbol.IsRemoved = state;
     }
     public bool GetStateRemoved()
