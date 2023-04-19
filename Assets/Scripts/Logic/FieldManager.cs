@@ -4,7 +4,7 @@ using UnityEngine;
 public class FieldManager : MonoBehaviour
 {
     public static readonly int INIT_SIZE = 5;
-    public static readonly int FIELD_EDGE_SIZE = 850;
+    public static readonly int FIELD_EDGE_SIZE = 1000;
     public static int realSize = 5;
     private float _cef;
 
