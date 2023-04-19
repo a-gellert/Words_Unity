@@ -51,6 +51,10 @@ public class GameUI : MonoBehaviour
         _scoreTXT.text = $"{StateManager.Instance.CurrentScore.ToString()}/{StateManager.Instance.ScoreToWin.ToString()}";
         _wordsTXT.text = StateManager.Instance.NumberOfWords.ToString();
     }
+    public void OnDelete()
+    {
+        StateManager.Instance.ClearWord();
+    }
     public void OnPauseMenu()
     {
         _pausePanel.gameObject.SetActive(true);

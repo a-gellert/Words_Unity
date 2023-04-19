@@ -23,10 +23,15 @@ public class LetterManager : MonoBehaviour
 
     private Color _currentColor;
 
-    public void SetValues()
+    public void SetValues(bool refresh, char symbol)
     {
 
-        _symbol.SymbolValue = (char)Random.Range(65, 91);
+        if (refresh)
+        {
+            _symbol.SymbolValue = symbol;
+        }
+        _symbol.IsChoosen = false;
+        _symbol.IsRemoved = false;
         _symbolTXT.text = _symbol.SymbolValue.ToString();
         _animator.SetBool("IsPick", false);
         _symbol.Modifier = GetModifier(_symbol.SymbolValue);
@@ -111,15 +116,20 @@ public class LetterManager : MonoBehaviour
         }
     }
 
-    public void RefreshLetter()
+    public void RefreshLetter(bool state)
     {
-
-        SetValues();
+        char ch = (char)Random.Range(65, 91);
+        SetValues(state, ch);
     }
     public void SymbolRemoved(bool state)
     {
 
         _symbol.IsRemoved = state;
+    }
+    public void SymbolChosen(bool state)
+    {
+
+        _symbol.IsChoosen = state;
     }
     public bool GetStateRemoved()
     {

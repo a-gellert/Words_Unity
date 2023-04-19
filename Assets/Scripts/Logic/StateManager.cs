@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class StateManager : MonoBehaviour
@@ -44,6 +45,13 @@ public class StateManager : MonoBehaviour
         }
     }
 
+    public void ClearWord()
+    {
+        _wordController.ClearWord();
+        Elementer.Instance.ClearSelected();
+        Picker.Refresh();
+        Letters.Symbols = new List<Symbol>();
+    }
     public void SetCurrentLevel(Level level)
     {
         _currentLevel = level;

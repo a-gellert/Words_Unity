@@ -47,7 +47,7 @@ public class Elementer : MonoBehaviour
                 if (_elements[i + _size * j].GetComponentInChildren<Symbol>().IsRemoved)
                 {
 
-                    _elements[i + _size * j].GetComponent<LetterManager>().RefreshLetter();
+                    _elements[i + _size * j].GetComponent<LetterManager>().RefreshLetter(true);
                     _elements[i + _size * j].GetComponent<LetterManager>().SymbolRemoved(false);
                     _tempElements[i + _size * (_size - 1 - countRemoved)] = _elements[i + _size * j];
                     if ((i + _size * (j + 1)) < _size * _size)
@@ -104,11 +104,19 @@ public class Elementer : MonoBehaviour
             CalculateMoving(item, multi);
         }
     }
+    public void ClearSelected()
+    {
+        foreach (var item in _elements)
+        {
+            item.GetComponent<LetterManager>().SymbolChosen(false);
+            item.GetComponent<LetterManager>().RefreshLetter(false);
 
-    public void SetCoef(int size)
+        }
+    }
+    public void SetSize(int size)
     {
         _size = size;
-        _coefficient = _elements[size].transform.position.y - _elements[1].transform.position.y;
+
     }
     private void GetCoef()
     {
