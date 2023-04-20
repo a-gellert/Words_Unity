@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Level : MonoBehaviour
@@ -9,5 +10,7 @@ public class Level : MonoBehaviour
     public int CountOfStars;
     public bool IsAllowed;
     public bool IsPassed;
+
+    public static List<Level> Levels { get; set; } = new List<Level>();
 
 }

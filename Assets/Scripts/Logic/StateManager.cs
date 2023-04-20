@@ -73,6 +73,7 @@ public class StateManager : MonoBehaviour
         if (CurrentScore >= ScoreToWin)
         {
             GameUI.Instance.WinShow();
+            LevelManager.Instance.LevelCompleted(_currentLevel.Id);
         }
         else if (NumberOfWords == 0)
         {

@@ -14,14 +14,19 @@ public class LevelController : MonoBehaviour
     void Start()
     {
         _level = GetComponent<Level>();
+        _numberOfLevel.text = (_level.Id + 1).ToString();
         SetStateOfLevel();
     }
-    private void SetStateOfLevel()
+    public void SetStateOfLevel()
     {
-        _numberOfLevel.text = _level.Id.ToString();
-        if (_level.IsAllowed)
+
+        if (_level.IsAllowed && !_level.IsPassed)
         {
             _image.color = Palette.BlueForMix;
+        }
+        else if (_level.IsPassed)
+        {
+            _image.color = Palette.CellGreen;
         }
     }
 

@@ -34,7 +34,16 @@ public class GameUI : MonoBehaviour
         Instance = this;
     }
 
-
+    private void Update()
+    {
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                OnExit();
+            }
+        }
+    }
 
     public void Show(bool state)
     {
