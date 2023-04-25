@@ -11,15 +11,20 @@ public class LevelController : MonoBehaviour
     [SerializeField]
     private Image _image;
 
-    void Start()
+    void Awake()
     {
         _level = GetComponent<Level>();
         _numberOfLevel.text = (_level.Id + 1).ToString();
-        SetStateOfLevel();
     }
-    public void SetStateOfLevel()
+    public bool GetPassed()
+    {
+        return _level.IsPassed;
+    }
+    public void SetStateOfLevel(bool isAllowed = false, bool isPassed = false)
     {
 
+        _level.IsAllowed = isAllowed;
+        _level.IsPassed = isPassed;
         if (_level.IsAllowed && !_level.IsPassed)
         {
             _image.color = Palette.BlueForMix;

@@ -11,6 +11,6 @@ public class Level : MonoBehaviour
     public bool IsAllowed;
     public bool IsPassed;
 
-    public static List<Level> Levels { get; set; } = new List<Level>();
+    //public static List<Level> Levels { get; set; } = new List<Level>();
 
 }

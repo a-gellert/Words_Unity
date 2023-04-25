@@ -20,5 +20,6 @@ public class MainMenuUI : MonoBehaviour
     {
         _menuCanvas.gameObject.SetActive(false);
         LevelUI.Instance.Show(true);
+        LevelManager.Instance.SetState();
     }
 }

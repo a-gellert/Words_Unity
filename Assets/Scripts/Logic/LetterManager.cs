@@ -49,7 +49,10 @@ public class LetterManager : MonoBehaviour
             _bonusTXT.text = _symbol.Bonus.ToString();
         }
     }
-
+    public Color GetColor()
+    {
+        return _currentColor;
+    }
     public bool PickLetter(int index)
     {
         if (_symbol.IsChoosen)
@@ -118,7 +121,17 @@ public class LetterManager : MonoBehaviour
 
     public void RefreshLetter(bool state)
     {
-        char ch = (char)Random.Range(65, 91);
+        var rnd = Random.Range(0, 5);
+        char ch;
+        if (rnd <= 1)
+        {
+            ch = AlphabetController.GetVowel();
+        }
+        else
+        {
+            ch = AlphabetController.GetConsonant();
+        }
+
         SetValues(state, ch);
     }
     public void SymbolRemoved(bool state)

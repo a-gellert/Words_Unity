@@ -12,16 +12,15 @@ public class AlphabetController
         _originPercent = Random.Range(30f, 37f);
 
         _countOfVowels = Mathf.FloorToInt(size * size / 100f * _originPercent);
-        Debug.Log(_countOfVowels);
         for (int i = 0; i < (size * size); i++)
         {
             if (i < _countOfVowels)
             {
-                Alphabet.Alphalist.Add(Alphabet.Vowels[Random.Range(0, Alphabet.Vowels.Count)]);
+                Alphabet.Alphalist.Add(GetVowel());
             }
             else
             {
-                Alphabet.Alphalist.Add(Alphabet.Consonantals[Random.Range(0, Alphabet.Consonantals.Count)]);
+                Alphabet.Alphalist.Add(GetConsonant());
             }
 
         }
@@ -32,5 +31,14 @@ public class AlphabetController
             Alphabet.Alphalist[j] = Alphabet.Alphalist[i];
             Alphabet.Alphalist[i] = temp;
         }
+    }
+
+    public static char GetVowel()
+    {
+        return Alphabet.Vowels[Random.Range(0, Alphabet.Vowels.Count)];
+    }
+    public static char GetConsonant()
+    {
+        return Alphabet.Consonantals[Random.Range(0, Alphabet.Consonantals.Count)];
     }
 }

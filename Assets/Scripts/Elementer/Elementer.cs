@@ -1,11 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class Elementer : MonoBehaviour
 {
     public static Elementer Instance;
+    [SerializeField]
+    GameObject _particle;
     private Vector3 _roof;
+    private List<GameObject> _particles = new List<GameObject>();
     private List<GameObject> _elements = new List<GameObject>();
     private List<GameObject> _tempElements = new List<GameObject>();
     private List<GameObject> _removedElements = new List<GameObject>();
@@ -34,6 +38,7 @@ public class Elementer : MonoBehaviour
     }
     public void RemoveElements()
     {
+        _particles = new List<GameObject>();
         _tempElements = new List<GameObject>(_elements);
         _roof = _elements.Last().transform.position;
         GetCoef();
@@ -46,7 +51,9 @@ public class Elementer : MonoBehaviour
             {
                 if (_elements[i + _size * j].GetComponentInChildren<Symbol>().IsRemoved)
                 {
-
+                    var obj = Instantiate(_particle, _elements[i + _size * j].transform.position, Quaternion.identity);
+                    obj.GetComponent<ParticleController>().SetColor(_elements[i + _size * j].GetComponent<LetterManager>().GetColor());
+                    _particles.Add(obj);
                     _elements[i + _size * j].GetComponent<LetterManager>().RefreshLetter(true);
                     _elements[i + _size * j].GetComponent<LetterManager>().SymbolRemoved(false);
                     _tempElements[i + _size * (_size - 1 - countRemoved)] = _elements[i + _size * j];
@@ -55,6 +62,7 @@ public class Elementer : MonoBehaviour
                         multi++;
                     }
                     countRemoved++;
+
                 }
                 else if (!_elements[i + _size * j].GetComponentInChildren<Symbol>().IsRemoved)
                 {
@@ -77,7 +85,10 @@ public class Elementer : MonoBehaviour
 
             FillRemoved(countRemoved);
         }
-
+        foreach (var item in _particles)
+        {
+            item.GetComponent<ParticleController>().Play();
+        }
         _elements = new List<GameObject>(_tempElements);
     }
 

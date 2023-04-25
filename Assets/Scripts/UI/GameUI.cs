@@ -31,9 +31,13 @@ public class GameUI : MonoBehaviour
 
     void Awake()
     {
+
         Instance = this;
     }
-
+    void Start()
+    {
+        RefreshImages();
+    }
     private void Update()
     {
         if (Application.platform == RuntimePlatform.Android)
@@ -68,6 +72,7 @@ public class GameUI : MonoBehaviour
     {
         _pausePanel.gameObject.SetActive(true);
         Picker.IsOff = true;
+
     }
     public void OnResume()
     {
@@ -77,12 +82,22 @@ public class GameUI : MonoBehaviour
     }
     public void OnRestart()
     {
-        StateManager.Instance.RestartLevel();
-        _pausePanel.gameObject.SetActive(false);
-        _WinLosePanel.gameObject.SetActive(false);
-        _scoreTXT.text = $"{StateManager.Instance.CurrentScore.ToString()}/{StateManager.Instance.ScoreToWin.ToString()}";
-        _wordsTXT.text = StateManager.Instance.NumberOfWords.ToString();
-        Picker.IsOff = false;
+
+        if (StateManager.Instance.Lives > 0)
+        {
+            StateManager.Instance.SubstractLives();
+            StateManager.Instance.RestartLevel();
+            _pausePanel.gameObject.SetActive(false);
+            _WinLosePanel.gameObject.SetActive(false);
+            _scoreTXT.text = $"{StateManager.Instance.CurrentScore.ToString()}/{StateManager.Instance.ScoreToWin.ToString()}";
+            _wordsTXT.text = StateManager.Instance.NumberOfWords.ToString();
+            Picker.IsOff = false;
+        }
+        else
+        {
+            OnExit();
+        }
+
     }
     public void OnExit()
     {
@@ -111,10 +126,32 @@ public class GameUI : MonoBehaviour
 
     public void OnSound()
     {
-
+        SoundManager.Instance.OnSound();
+        RefreshImages();
     }
     public void OnMusic()
     {
+        SoundManager.Instance.OnMusic();
+        RefreshImages();
+    }
 
+    private void RefreshImages()
+    {
+        if (SoundManager.Instance.MusicIsOn)
+        {
+            _musicStateImg.color = Palette.CellGreen;
+        }
+        else
+        {
+            _musicStateImg.color = Palette.CellRed;
+        }
+        if (SoundManager.Instance.SoundIsOn)
+        {
+            _soundStateImg.color = Palette.CellGreen;
+        }
+        else
+        {
+            _soundStateImg.color = Palette.CellRed;
+        }
     }
 }

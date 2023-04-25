@@ -13,10 +13,11 @@ public class StateManager : MonoBehaviour
     public int CurrentScore { get; private set; }
     public int ScoreToWin { get; private set; }
     public int NumberOfWords { get; private set; }
-    public int Lives { get; private set; } = 5;
+    public int Lives { get; private set; } = 1;
     public int Coins { get; private set; } = 0;
     public int Experience { get; private set; } = 0;
     public string LongestWord { get; private set; } = "";
+    public List<bool> LevelsState { get; private set; }
 
     public static StateManager Instance;
 
@@ -24,8 +25,11 @@ public class StateManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        SaveLoad.Preload();
+        Coins = SaveLoad.LoadCoins();
+        Lives = SaveLoad.LoadLives();
+        LevelsState = SaveLoad.LoadLevelsState();
     }
-
     public void EnterWord()
     {
         if (WordController.IsRight)
@@ -72,16 +76,26 @@ public class StateManager : MonoBehaviour
     {
         if (CurrentScore >= ScoreToWin)
         {
+
             GameUI.Instance.WinShow();
             LevelManager.Instance.LevelCompleted(_currentLevel.Id);
+            LevelsState = LevelManager.Instance.GetState();
+            SaveLoad.SaveAll(Lives, Coins, LevelsState);
         }
         else if (NumberOfWords == 0)
         {
             GameUI.Instance.LoseShow();
-            if (Lives >= 0)
-            {
-                Lives--;
-            }
+            SubstractLives();
+            SaveLoad.SaveAll(Lives, Coins, LevelsState);
         }
+    }
+
+    public void SubstractLives()
+    {
+        if (Lives >= 0)
+        {
+            Lives--;
+        }
+
     }
 }
